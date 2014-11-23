@@ -101,59 +101,6 @@
     return $
 } (window, document);*/
 
-/*var $ = function(i) {
-    this.node = null;
-    var type = i.substr(0,1);
-
-    if(type == ".") {
-        if(navigator.appVersion.match(/8./i)=="8.") {
-            this.node = document.querySelectorAll(i);
-        } else {
-            this.node = document.getElementsByClassName(i.substr(1));
-        }
-    } else if(type == "#") {
-        this.node = document.getElementById(i.substr(1));
-    } else {
-        this.node = document.getElementsByTagName(i);
-    }
-
-    return this.node;
-}
-
-$.prototype.addClass = function(i) {
-    console.log(this.node);
-};*/
-
-/*var $ = function(selector) {
-       return new $.prototype.init(selector);
-}
-$.prototype = {
-
-    init: function(i) {
-
-        var type = i.substr(0,1);
-        if(type == ".") {
-            if(navigator.appVersion.match(/8./i)=="8.") {
-                this.node = document.querySelectorAll(i);
-            } else {
-                this.node = document.getElementsByClassName(i.substr(1));
-            }
-        } else if(type == "#") {
-            this.node = document.getElementById(i.substr(1));
-        } else {
-            this.node = document.getElementsByTagName(i);
-        }
-
-        return this;
-    },
-    name: function() {
-        return this
-    },
-}
-
-$.prototype.init.prototype = $.prototype;
-
-console.log($().name()) //20*/
 
 (function(win, doc, undefined) {
 
