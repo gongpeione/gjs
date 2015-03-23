@@ -1,10 +1,10 @@
 (function(win, doc, undefined) {
 
-    var $ = function(selector) {
+    var G = function(selector) {
         return new $.prototype.init(selector);
     }
 
-    $.prototype = {
+    G.prototype = {
 
         select : null,
         type   : null,
@@ -169,7 +169,7 @@
         };
     }
 
-    $.cookie = function(name, value, exp) {
+    G.cookie = function(name, value, exp) {
         if (typeof value != 'undefined') {
             exp = exp || 1;
             var date = new Date();
@@ -182,7 +182,7 @@
         }
     };
 
-    $.prototype.init.prototype = $.prototype;
-    window.$ = $;
+    G.prototype.init.prototype = G.prototype;
+    window.G = G;
 
 })(window, document);
