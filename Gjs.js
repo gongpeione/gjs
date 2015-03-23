@@ -1,107 +1,3 @@
-/*(function(win, doc) {
-
-    var $ = function() {}
-    $ : function(i) {
-
-        var type = i.substr(0,1);
-
-        if(type == ".") {
-            if(navigator.appVersion.match(/8./i)=="8.") {
-                return doc.querySelectorAll(i);
-            } else {
-                return doc.getElementsByClassName(i.substr(1));
-            }
-
-        } else if(type == "#") {
-            return doc.getElementById(i.substr(1));
-        } else {
-            return doc.getElementsByTagName(i);
-        }
-    },
-
-    addClass : function(classText) {
-        this.className += classText;
-    }
-
-    $.S = function(i) {
-        return doc.querySelectorAll(i)
-    };
-
-    $.t = function(p, i) { 
-
-        ! i && (i = p) && (p = doc);
-        return p.getElementsByTagName(i)
-    };
-
-    $.c = function(p, c) { 
-
-        ! c && (c = p) && (p = doc);
-        for (var n = ' ', e = p.getElementsByTagName('*'), r = [], i = 0, j; j = e[i]; i++)
-            (n + j.className + n).indexOf(n + c + n) == -1 || r.push(j);
-
-        return r
-    };
-
-    $.css = function(p, i) {
-        p.style.cssText += (';' + i)
-    };
-
-    $.x = function(i, p, f, e, x) {
-        //(typeof p=='function')&&(e=f)&&(f=p)&&(p=0);
-        if (typeof p == 'function') {
-            e = f;
-            f = p;
-            p = 0;
-        } (x = new XMLHttpRequest()).open(p ? 'POST': 'GET', i, 1);
-        x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        if (f || e) x.onreadystatechange = function() {
-            if (x.readyState == 4)((x.status > 199 && x.status < 301) || x.status == 304) ? f(x.responseText) : e(x.status);
-        };
-        x.send(p || '');
-        return x //.abort()
-    };
-    $.j = function(i, f, s, t) {
-        s = $.D.m('script'),
-        t = 'cb' + new Date().valueOf();
-        s.src = i.replace(/\{cb\}/, t);
-        if (f) win[t] = f;
-        $.D.a(s)
-    };
-    $.swf = function(i) {
-        return doc[i] || $(i)
-    };
-    $.cookie = function(i, v, s) {
-        if (typeof v != 'undefined') {
-            s = s || 31536000;
-            var d = new Date();
-            d.setTime(d.getTime() + s * 1000);
-            doc.cookie = i + '=' + escape(v) + ';expires=' + d.toGMTString()
-        } else {
-            var a = doc.cookie.match(new RegExp('(^| )' + i + '=([^;]*)(;|$)'));
-            return a == null ? null: unescape(a[2])
-        }
-    };
-    $.D = {
-        m: function(i) {
-            return doc.createElement(i)
-        },
-        d: function(o) {
-            return o.parentNode.removeChild(o)
-        },
-        a: function(p, i) { ! i && (i = p) && (p = doc.body);
-            return p.appendChild(i)
-        },
-        b: function(p, i) {
-            p.insertBefore(i, p.childNodes[0])
-        }
-    };
-    $.b = $.t('html')[0].className = self.ActiveXObject ? 'IE': self.chrome ? 'Cr': self.mozPaintCount > ~ [] ? 'FF': self.opera ? 'Op': self.chrome && !!self.WebKitPoint ? 'Sa': '';
-
-    //if(window.screen.colorDepth==32) return;
-    return $
-} (window, document);*/
-
-
 (function(win, doc, undefined) {
 
     var $ = function(selector) {
@@ -169,20 +65,63 @@
                 if(this.type == "#") {
                     this.select.style.cssText += (';' + cssText);
                 } else {
-                    for (var i = 0; i < this.select.length; i++) this.select[i].style.cssText += (';' + cssText);
+                    for (var i = 0; i < this.select.length; i++) 
+                        this.select[i].style.cssText += (';' + cssText);
                 }
+            } else {
+
             }
         },
+
+        getCss : function(cssName) {
+            if(this.select.currentStyle) {
+                return this.select.currentStyle[cssName];
+            } else {
+                return document.defaultView.getComputedStyle(this.select, false)[cssName];
+            }
+        }
+
+        hasClass : function(obj, cls) {
+            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+        },
+
+        addClass : function(obj, cls) {
+            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+        },
+
+        removeClass : function(obj, cls) {
+            if (hasClass(obj, cls)) {
+                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+                obj.className = obj.className.replace(reg, ' ');
+            }
+        },
+
+        /*animate : function(conf, timer) {
+            clearInterval(this.select.timer);
+            this.select.timer = setInterval(function() {
+                for(var attr in json) {
+                    var current = 0;
+
+                    if(attr == 'opacity') {
+                        current = Math.round(parseFloat(this.getCss(attr)) * 100);
+                    } else {
+                        current = parseInt(this.getCss(attr));
+                    }
+
+                    
+                }
+            })
+        }  */
     }
 
     $.ajax = function(conf) {
  
-        var type     = conf.type;
-        var url      = conf.url;
-        var data     = conf.data; 
-        var dataType = conf.dataType;
-        var success  = conf.success;
-        var jsonp    = conf.jsonp;
+        var type     = conf.type || 'GET';
+        var url      = conf.url || '';
+        var data     = conf.data || ''; 
+        var dataType = conf.dataType || 'TEXT';
+        var success  = conf.success || function() {};
+        var jsonp    = conf.jsonp function() {};
                                                                                              
         if (type == null){
             type = "get";
@@ -230,16 +169,16 @@
         };
     }
 
-    $.cookie = function(i, v, s) {
-        if (typeof v != 'undefined') {
-            s = s || 1;
-            var d = new Date();
-            d.setTime(d.getTime() + s*24*60*60*1000);
-            doc.cookie = i + '=' + escape(v) + ';expires=' + d.toGMTString();
-            console.log( i + '=' + escape(v) + ';expires=' + d.toGMTString());
+    $.cookie = function(name, value, exp) {
+        if (typeof value != 'undefined') {
+            exp = exp || 1;
+            var date = new Date();
+            date.setTime(date.getTime() + exp*24*60*60*1000);
+            doc.cookie = name + '=' + escape(value) + ';expires=' + date.toGMTString();
+            console.log( name + '=' + escape(value) + ';expires=' + date.toGMTString());
         } else {
-            var a = doc.cookie.match(new RegExp('(^| )' + i + '=([^;]*)(;|$)'));
-            return a == null ? null: unescape(a[2])
+            var value = doc.cookie.match(new RegExp('(^| )' + name + '=([^;]*)(;|$)'));
+            return value == null ? null: unescape(a[2]);
         }
     };
 
